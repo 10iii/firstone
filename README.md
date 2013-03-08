@@ -1,6 +1,7 @@
 #title1
 text  
-text2:  
+text2 :
+
 	function(req, res){
 	  var start_time = Date.now();
 	  myquery("SELECT * FROM verycd WHERE del_flag = 0 AND verycdid = '"+req.params.id+"'; "
