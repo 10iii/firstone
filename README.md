@@ -15,4 +15,4 @@ text2 :
 	  		}
 	  	}, DBCACHESECOND) //myquery("SELECT * FROM verycd WHERE del_flag = 0 AND verycdid = '"+req.params.id+"'; "
 	},
-		
+			
