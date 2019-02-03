@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>FORMAT</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/pure-min.css" integrity="sha384-CCTZv2q9I9m3UOxRLaJneXrrqKwUNOzZ6NGEUMwHtShDJ+nCoiXJCAgi05KfkLGY" crossorigin="anonymous">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/grids-responsive-min.css">
+    <!--<![endif]-->
+  </head>
+  <body>
+ 
+	<form class="pure-form pure-form-stacked">
+	    <fieldset>
+	        <legend>FORMAT</legend>
+
+	        <label for="char">char in a line(max 7 for wechat)</label>
+	        <input id="char" type="text" placeholder="could not be empty" value="7">
+
+	        <label for="line">max line(10 default)</label>
+	        <input id="line" type="text" placeholder="could not be empty" value="10">
+
+	        <label for="in">INOUT TEXT</label>
+	        <input id="in" type="text" placeholder="">
+
+	        <label for="out">OUTPUT TEXT</label>
+			<textarea id="out" name="out"
+			          rows="10" cols="45"></textarea>
+
+	        <button id="format" type="button" class="pure-button pure-button-primary">FORMAT</button>
+	    </fieldset>
+	</form>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script>
+        $( document ).ready(function() {
+	        $("#format").click(function(event) {
+	            //$("#out").val( "The link "+$("#char").val()+"||"+ $("#line").val()+"||"+$("#in").val()+'\n'+"ssssssssssssss");
+	            const FULLBLANK = '\u3000';
+	            var chars = $("#char").val();
+	            var lines = $("#line").val();
+	            var inputtext = $("#in").val().trim();
+	            var finalline = 0;
+	            var blks = chars - (Array.from(inputtext).length%chars);
+	            if (blks == 7){
+	            	blks = 0;
+	            	finalline = Math.floor(Array.from(inputtext).length/chars);
+	            }else{
+	            	finalline = Math.floor(Array.from(inputtext).length/chars) + 1;
+	            }
+	            finalline = finalline > lines ? lines : finalline;
+
+
+	            var i,j,t;
+	            for(i = 0; i< blks; i++){
+	            	inputtext = inputtext + FULLBLANK;
+	            }
+
+	            var outarr = [];
+	            t = 0;
+	            for (i=0; i<finalline; i++){
+	            	let tarr = [];
+	            	for(j=0; j<chars; j++){
+	            		tarr.push(inputtext[t]);
+	            		t++;
+	            	}
+	            	outarr.push(tarr);
+	            }
+
+	            var outtext = "";
+	            /*
+
+	            for (i=0; i<finalline; i++){
+	            	for(j=0; j<chars; j++){
+	            		outtext += outarr[i][j];
+	            	}
+	            	outtext += '\n';
+	            }
+	            */
+
+
+	            for (i=0; i<chars; i++){
+	            	for(j = finalline-1; j >= 0; j--){
+	            		outtext += outarr[j][i] + ' ';
+	            	}
+	            	outtext += '\n';
+	            }
+
+
+	            $("#out").val(outtext)
+	            event.preventDefault();
+	        });
+	    });
+    </script>
+
+
+  </body>
+</html>
